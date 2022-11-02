@@ -2,18 +2,16 @@
 //console.log(res)
 //}))
 
-const res = require("express/lib/response");
-
 const pokeButton = document.getElementById("get-pokemon");
 const pokeball = document.getElementById("pokeball");
-const BASE_URL = "http://localhost:4000/api/";
+const BASE_URL = 'http://localhost:4000/api';
 
 const renderPokemon = ({ data }) => {
   data.forEach((pokemon) => {
     const pokemonContainer = document.createElement("div");
     const pokemonImg = document.createElement("img");
     const pokemonLabel = document.createElement("label");
-    pokemonContainer.addEventListener("click", () => battlePokemon(pokemon.id));
+    pokemonContainer.addEventListener("click", () => battlePokemon(pokemon));
     pokemonLabel.textContent = pokemon.name;
     pokemonImg.src = pokemon.sprites.front_default;
     pokemonContainer.append(pokemonImg, pokemonLabel);
@@ -46,6 +44,18 @@ function deletePokemon(id) {
   });
 }
 
+
 pokeButton.addEventListener("click", () => {
-  axios.get(`${BASE_URL}/api/all-pokemon`).then(renderPokemon);
-});
+  axios.get(`${BASE_URL}/all-pokemon`).then(({data}) => {
+  data.forEach((pokemon) => {
+    const pokemonContainer = document.createElement("div");
+    const pokemonImg = document.createElement("img");
+    const pokemonLabel = document.createElement("label");
+    pokemonContainer.addEventListener("click", () => battlePokemon(pokemon));
+    pokemonLabel.textContent = pokemon.name;
+    pokemonImg.src = pokemon.sprites.front_default;
+    pokemonContainer.append(pokemonImg, pokemonLabel);
+    pokeball.appendChild(pokemonContainer);
+})
+  })
+})

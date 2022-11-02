@@ -20,14 +20,15 @@ app.get("/api/RandomPokemon", (req, res) => {
   res.status(200).send(randomPokemon);
 });
 
-app.get("./api/all-pokemon", (req, res) => {
+app.get("/api/all-pokemon", (req, res) => {
   res.status(200).send(pokemonArr);
 });
 
-app.delete("./api/pokemon/:id", (req, res) => {
+app.delete("/api/pokemon/:id", (req, res) => {
   const { id } = req.params;
   pokemonArr = pokemonArr.filter((pokemon) => pokemon.id !== +id);
   res.status(200).send(pokemonArr);
 });
 
 app.listen(4000, () => console.log("listening on 4000"));
+
